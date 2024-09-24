@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Technician App</title>
+    <link rel="stylesheet" href="ping.css">
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+main {
+    padding: 20px;
+}
+
+input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+pre {
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+
+</style>
+</head>
+<body>
+    <header>
+        <h1>Network Technician App</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Ping Test</h2>
+            <input type="text" id="hostname" placeholder="Enter hostname or IP">
+            <button onclick="ping()">Ping</button>
+            <pre id="pingResult"></pre>
+        </section>
+    </main><br>
+<hr>
+<footer id="foot01"></footer>
+    <script>
+
+async function ping() {
+    const hostname = document.getElementById('hostname').value;
+    const resultElement = document.getElementById('pingResult');
+
+    // Basic validation
+    if (!hostname) {
+        resultElement.textContent = 'Please enter a hostname or IP.';
+        return;
+    }
+
+    try {
+        const response = await fetch(`/ping?hostname=${encodeURIComponent(hostname)}`);
+        const result = await response.text();
+        resultElement.textContent = result;
+    } catch (error) {
+        resultElement.textContent = 'Error: ' + error.message;
+    }
+}
+
+document.getElementById("foot01").innerHTML =
+"<p>&copy;  "+ new Date().getFullYear() + "  epsonagunda. All rights reserved.</p>";
+
+</script>
+</body>
+</html>
